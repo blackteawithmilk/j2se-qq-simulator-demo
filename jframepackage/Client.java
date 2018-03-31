@@ -8,9 +8,9 @@ import java.net.*;
 import javax.swing.*;
 
 /**
- * ClientJFrame
+ * Client
  */
-public class ClientJFrame extends JFrame {
+public class Client extends JFrame {
 
     JTextArea tArea = null;
     JTextField tField = null;
@@ -18,14 +18,16 @@ public class ClientJFrame extends JFrame {
     Socket socket = null;
 
     public static void main(String[] args) {
-        ClientJFrame client = new ClientJFrame();
+        Client client = new Client();
         client.launchClient();
     }
 
     public void launchClient() {
         this.setLocation(200, 300);
         this.setSize(600, 500);
+        this.setTitle("¿Í»§¶Ë");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         tArea = new JTextArea();
         tField = new JTextField();
         this.add(tArea, BorderLayout.NORTH);
@@ -33,7 +35,7 @@ public class ClientJFrame extends JFrame {
         this.pack();
         tArea.setEditable(false);
         tField.addActionListener(new TfListener());
-        this.pack();
+
         this.setVisible(true);
         this.connect();
     }
@@ -61,10 +63,9 @@ public class ClientJFrame extends JFrame {
 
     private class TfListener implements ActionListener {
 
-        String str = tField.getText().trim();
-
         @Override
         public void actionPerformed(ActionEvent e) {
+            String str = tField.getText().trim();
             if (!str.equals("")) {
                 tArea.append(str+"\n");
                 sendMessage(str);
