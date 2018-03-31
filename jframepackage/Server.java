@@ -27,9 +27,14 @@ public class Server {
     }
 
     public String receiveMessage() {
-        DataInputStream dStream = new DataInputStream(socket.getInputStream());
-        String str = dStream.readUTF();
-        dStream.close();
-        return str;
+        try {
+            DataInputStream dStream = new DataInputStream(socket.getInputStream());
+            String str = dStream.readUTF();
+            dStream.close();
+            return str;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

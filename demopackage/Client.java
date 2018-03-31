@@ -54,10 +54,9 @@ public class Client extends Frame {
 
     private class TfListener implements ActionListener {
 
-        String str = tField.getText().trim();
-
         @Override
         public void actionPerformed(ActionEvent e) {
+            String str = tField.getText().trim();
             if (!str.equals("")) {
                 tArea.append(str+"\n");
             }
