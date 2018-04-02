@@ -16,7 +16,7 @@ public class Client extends JFrame {
     JTextField tField = null;
 
     Socket socket = null;
-    DataOutputStream dStream;
+    DataOutputStream dStream = null;
 
     public static void main(String[] args) {
         Client client = new Client();
@@ -30,7 +30,7 @@ public class Client extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                this.disconnect();
+                disconnect();
                 System.exit(0);
             }
         });
@@ -61,15 +61,25 @@ public class Client extends JFrame {
         try {
             dStream = new DataOutputStream(socket.getOutputStream());
             dStream.writeUTF(str);
+            dStream.flush(); 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void disconnect() {
-        dStream.flush();
-        dStream.close();
-        socket.close();
+        try {
+            if (dStream != null) {
+System.out.println("closing dstream...");
+                dStream.close();
+            }
+            if (socket != null) {
+System.out.println("closing socket...");
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private class TfListener implements ActionListener {
