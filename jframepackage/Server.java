@@ -8,7 +8,9 @@ import java.io.*;
  */
 public class Server {
 
+    ServerSocket serverSocket = null;
     Socket socket = null;
+    boolean isServerStarted = false;
 
     public static void main(String[] args) {
         new Server().launchServer();
@@ -16,13 +18,18 @@ public class Server {
 
     public void launchServer() {
         try {
-            ServerSocket serverSocket = new ServerSocket(8080);
-            while (true) {
-                socket = serverSocket.accept();
-                System.out.println(this.receiveMessage());
-            }
+            serverSocket = new ServerSocket(8080);
+            isServerStarted = true;
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        while (isServerStarted) {
+            try {
+                socket = serverSocket.accept();
+                System.out.println(this.receiveMessage());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
