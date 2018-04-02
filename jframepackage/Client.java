@@ -50,18 +50,9 @@ public class Client extends JFrame {
     public void connect() {
         try {
             socket = new Socket("127.0.0.1", 8080);
+            dStream = new DataOutputStream(socket.getOutputStream());
         } catch (UnknownHostException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void sendMessage(String str) {
-        try {
-            dStream = new DataOutputStream(socket.getOutputStream());
-            dStream.writeUTF(str);
-            dStream.flush(); 
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,6 +84,17 @@ System.out.println("closing socket...");
             }
             tArea.setCaretPosition(tArea.getText().length());
             tField.setText("");
+        }
+
+        public void sendMessage(String str) {
+            try {
+                if (dStream != null) {
+                    dStream.writeUTF(str);
+                    dStream.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
