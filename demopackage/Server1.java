@@ -8,11 +8,20 @@ import java.net.*;
  */
 public class Server1 {
 
+    ServerSocket serverSocket = null;
+    Socket socket = null;
+    boolean isServerStarted = false;
+
     public static void main(String[] args) {
+        new Server().launchServer();
+    }
+
+    public void launchServer() {
         try {
-            ServerSocket serverSocket = new ServerSocket(8080);
+            serverSocket = new ServerSocket(8080);
+            isServerStarted = true;
             while (true) {
-                Socket socket = serverSocket.accept();
+                socket = serverSocket.accept();
             }
         } catch (IOException e) {
             e.printStackTrace();

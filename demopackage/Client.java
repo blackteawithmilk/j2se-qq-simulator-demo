@@ -60,8 +60,12 @@ public class Client extends Frame {
 
     public void disconnect() {
         try {
-            dStream.close();
-            socket.close();
+            if (dStream != null) {
+                dStream.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } 
@@ -82,8 +86,12 @@ public class Client extends Frame {
 
         public void sendMessage(String str) {
             if (dStream != null) {
-                dStream.writeUTF(str);
-                dStream.flush();
+                try {
+                    dStream.writeUTF(str);
+                    dStream.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
