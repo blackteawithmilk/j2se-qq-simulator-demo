@@ -27,6 +27,7 @@ public class Server {
             try {
                 socket = serverSocket.accept();
                 System.out.println(this.receiveMessage());
+                socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
