@@ -31,6 +31,7 @@ public class Server1 {
                     receiveMessage();
                 }
                 dStream.close();
+                socket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,6 +43,7 @@ public class Server1 {
             String str = dStream.readUTF();
             System.out.println(str);
         } catch (IOException e) {
+            isClientConnected = false;
             e.printStackTrace();
         }
     }
