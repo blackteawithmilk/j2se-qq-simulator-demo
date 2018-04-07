@@ -44,14 +44,17 @@ public class Server1 {
                 }
             }
         } catch (IOException e) {
+            try {
+                if (dStream != null) {
+                    dStream.close();
+                }
+                if (socket != null) {
+                    socket.close();
+                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
             e.printStackTrace();
-        } finally {
-            if (dStream != null) {
-                dStream.close();
-            }
-            if (socket != null) {
-                socket.close();
-            }
         }
     }
 
