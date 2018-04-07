@@ -1,5 +1,6 @@
 package demopackage;
 
+import java.awt.image.ImagingOpException;
 import java.io.*;
 import java.net.*;
 
@@ -22,16 +23,25 @@ public class Server1 {
         try {
             serverSocket = new ServerSocket(8080);
             isServerStarted = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
             while (isServerStarted) {
                 socket = serverSocket.accept();
                 isClientConnected = true;
+                System.out.println("Client connected...");
                 dStream = new DataInputStream(socket.getInputStream());
                 while (isClientConnected) {
-                    System.out.println("Client connected");
                     receiveMessage();
                 }
-                dStream.close();
-                socket.close();
+                if (dStream != null) {
+                    dStream.close();
+                }
+                if (socket != null) {
+                    socket.close();
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,7 +54,7 @@ public class Server1 {
             System.out.println(str);
         } catch (IOException e) {
             isClientConnected = false;
-            e.printStackTrace();
+            System.out.println("Client disconnected...");
         }
     }
 }
