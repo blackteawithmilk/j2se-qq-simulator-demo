@@ -45,6 +45,13 @@ public class Server1 {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (dStream != null) {
+                dStream.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
         }
     }
 
