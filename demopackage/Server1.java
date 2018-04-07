@@ -62,9 +62,11 @@ public class Server1 {
         try {
             String str = dStream.readUTF();
             System.out.println(str);
-        } catch (IOException e) {
+        } catch (EOFException e) {
             isClientConnected = false;
             System.out.println("Client disconnected...");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
