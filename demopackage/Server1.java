@@ -23,6 +23,9 @@ public class Server1 {
         try {
             serverSocket = new ServerSocket(8080);
             isServerStarted = true;
+        } catch (BindException e) {
+            System.out.println("The port is being used...");
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
