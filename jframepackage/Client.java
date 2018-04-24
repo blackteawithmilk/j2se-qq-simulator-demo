@@ -61,11 +61,9 @@ public class Client extends JFrame {
     public void disconnect() {
         try {
             if (dStream != null) {
-System.out.println("closing dstream...");
                 dStream.close();
             }
             if (socket != null) {
-System.out.println("closing socket...");
                 socket.close();
             }
         } catch (IOException e) {

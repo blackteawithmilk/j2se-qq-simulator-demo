@@ -11,6 +11,8 @@ public class Server {
     ServerSocket serverSocket = null;
     Socket socket = null;
     boolean isServerStarted = false;
+    boolean isClientConnected = false;
+    DataInputStream dStream = null;
 
     public static void main(String[] args) {
         new Server().launchServer();
@@ -26,7 +28,13 @@ public class Server {
         while (isServerStarted) {
             try {
                 socket = serverSocket.accept();
-                System.out.println(this.receiveMessage());
+                dStream = new DataInputStream(socket.getInputStream());
+                isClientConnected = true;
+                System.out.println("Client connected...");
+                while (isClientConnected) {
+                    receiveMessage();
+                }
+                dStream.close();
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -34,15 +42,12 @@ public class Server {
         }
     }
 
-    public String receiveMessage() {
+    public void receiveMessage() {
         try {
-            DataInputStream dStream = new DataInputStream(socket.getInputStream());
             String str = dStream.readUTF();
-            dStream.close();
-            return str;
+            System.out.println("Recv Msg: "+str);
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
     }
 }
